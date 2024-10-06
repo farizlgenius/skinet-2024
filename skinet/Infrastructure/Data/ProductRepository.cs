@@ -34,6 +34,7 @@ public class ProductRepository(StoreContext context) : IProductRepository
 
     if (!string.IsNullOrWhiteSpace(brand)) query = query.Where(x => x.Brand == brand);
     if (!string.IsNullOrWhiteSpace(type)) query = query.Where(x => x.Type == type);
+
     query = sort switch
     {
       "priceAsc" => query.OrderBy(x => x.Price),

@@ -12,6 +12,7 @@ builder.Services.AddDbContext<StoreContext>(opt =>
   opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 //All Above this line is Service : Service is thing that we inject to software
 var app = builder.Build();
 //All Below this line is Middleware
