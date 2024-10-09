@@ -1,3 +1,4 @@
+using API.Middleware;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -13,13 +14,15 @@ builder.Services.AddDbContext<StoreContext>(opt =>
 });
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddCors();
 //All Above this line is Service : Service is thing that we inject to software
 var app = builder.Build();
 //All Below this line is Middleware
 
 
 // Configure the HTTP request pipeline.
-
+app.UseMiddleware<ExceptionMiddleware>();
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200", "https://localhost:4200"));
 app.MapControllers();
 
 try
